@@ -7,6 +7,7 @@
 ## Visual changes (required if relevant)
 
 - *For visual changes in project include before / after screenshots.*
+- *testing setup*
 
 
 ## Test coverage (required)
