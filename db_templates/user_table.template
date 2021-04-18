@@ -1,0 +1,9 @@
+CREATE TABLE users (
+    id INT UNSIGNED AUTO_INCREMENT NOT NULL,
+    user VARCHAR(255), 
+    password VARCHAR(255),
+    PRIMARY KEY ({{ primary_key }})
+    {% if foreign_key -%}
+    ,FOREIGN KEY ({{ foreign_key }})
+    {% endif -%}
+)

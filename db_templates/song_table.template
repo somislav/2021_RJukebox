@@ -1,0 +1,11 @@
+CREATE TABLE songs (
+    id INT UNSIGNED AUTO_INCREMENT NOT NULL,
+    song_name VARCHAR(255),
+    artist VARCHAR(255),
+    genre VARCHAR(255),
+    yt_link VARCHAR(255),
+    PRIMARY KEY ({{ primary_key }})
+    {% if foreign_key -%}
+    ,FOREIGN KEY ({{ foreign_key }})
+    {% endif -%}
+)
