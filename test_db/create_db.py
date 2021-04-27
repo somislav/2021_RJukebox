@@ -1,24 +1,29 @@
 import mysql.connector
-import os
-from dotenv import dotenv_values
 from test_db.create_table import create_table
 from test_db.users_input import input_user
+from utilities.db_util import connect_to_db, execute_query,check_if_db_exists
 
-config = dotenv_values(".env")
+mydb=connect_to_db()
+if not mydb:
+  raise Exception(f"Connecting to db unsuccessful.")
 
-mydb = mysql.connector.connect(
-  host="localhost",
-  user=config['USER'],
-  password=config['PASSWORD'],
-)
-
-mycursor = mydb.cursor()
-
-mycursor.execute("CREATE DATABASE RJukebox")
+mycursor=mydb.cursor()
+if not check_if_db_exists(mycursor,"RJukebox"):
+  query="CREATE DATABASE RJukebox"
+  execute_query(query,mycursor)
+  print("Database created.")
+else:
+  print("Database already exists.")
 
 mycursor.close()
 mydb.close()
 
-create_table('user_table.template', 'id')
-create_table('song_table.template', 'id')
-input_user()
+mydb=connect_to_db("RJukebox")
+mycursor=mydb.cursor()
+
+create_table(mycursor, 'users', 'user_table.template', 'id')
+create_table(mycursor, 'songs','song_table.template', 'id')
+input_user(mydb,mycursor)
+
+mycursor.close()
+mydb.close()
