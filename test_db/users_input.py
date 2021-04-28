@@ -1,7 +1,6 @@
-import jwt
 import json
+import logging
 import mysql.connector
-import os
 from dotenv import dotenv_values
 from create_users import create_users
 from utilities.db_util import check_if_table_exists
@@ -17,8 +16,8 @@ def input_user(mydb, cursor):
             cursor.execute("INSERT INTO users (user,password) VALUES (%s,%s)",(d['user'], d['password']))
 
         mydb.commit()
-        print("Users added.")
+        logging.info(f"Users added.")
         return True
     else:
-        print("Added users.")
+        logging.error(f"Users table doesn't exist.")
         return False

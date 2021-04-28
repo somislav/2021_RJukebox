@@ -1,4 +1,5 @@
 import mysql.connector
+import logging
 from db_templates.load_template import load_db_template
 from utilities.db_util import check_if_table_exists
 
@@ -7,8 +8,8 @@ def create_table(cursor, table_name, template_name: str,primary_key: str,foreign
     template = load_db_template(template_name)
     query=template.render(primary_key=primary_key,foreign_key=foreign_key)
     cursor.execute(query)
-    print(f"Table created")
+    logging.info(f"Table {table_name} created")
     return True
   else:
-    print("Table already exists.")
+    logging.warning(f"Table {table_name} already exists.")
     return False
