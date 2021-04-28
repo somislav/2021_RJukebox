@@ -17,7 +17,7 @@ def connect_to_db(db: str=""):
     print(e)
     return None
 
-def execute_query(query : str,cursor):
+def execute_query(query : str, cursor):
   try:
     result = cursor.execute(query)
     return result
