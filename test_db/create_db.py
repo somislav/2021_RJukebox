@@ -8,6 +8,8 @@ from test_db.users_input import input_user
 from utilities.db_util import connect_to_db, execute_query, check_if_db_exists
 
 def setup_db():
+  mydb = None
+  mycursor = None
   try:
     mydb = connect_to_db()
     if not mydb:

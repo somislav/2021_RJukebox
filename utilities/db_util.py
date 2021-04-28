@@ -1,20 +1,20 @@
-from dotenv import dotenv_values
+import os
+import logging
 import mysql.connector
 
-def connect_to_db(db: str=""):
-  config = dotenv_values(".env")
+def connect_to_db(db: str = ""):
   try:
     db_config = { 
       'host': 'localhost', 
-      'user': config['USER'], 
-      'password': config['PASSWORD']
+      'user': os.getenv('USER'),
+      'password': os.getenv('PASSWORD')
     } 
     if db: 
       db_config['database'] = db 
     mydb = mysql.connector.connect(**db_config)
     return mydb
-  except (MySQLdb.Error, MySQLdb.Warning) as e:
-    print(e)
+  except Exception as e:
+    logging.error(e)
     return None
 
 def execute_query(query : str, cursor):
@@ -22,7 +22,7 @@ def execute_query(query : str, cursor):
     result = cursor.execute(query)
     return result
   except Exception as e:
-    print(f"Failure while executing query [{query}]:{e}")
+    logging.error(f"Failure while executing query [{query}]:{e}")
     return None
 
 def check_if_exists(cursor, db : str, query) -> bool:
@@ -30,7 +30,7 @@ def check_if_exists(cursor, db : str, query) -> bool:
     cursor.execute(query) 
     return any([db == item[0] for item in cursor.fetchall()])
   except Exception as e:
-    print(f"Failure while executing query [{query}] : {e}")
+    logging.error(f"Failure while executing query [{query}] : {e}")
     return None
 
 def check_if_table_exists(cursor, table: str) -> bool:
