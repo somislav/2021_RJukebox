@@ -13,7 +13,8 @@ def setup_db():
   try:
     mydb = connect_to_db()
     if not mydb:
-      raise Exception(f"Connecting to db unsuccessful.")
+      logging.critical("Connection to DB unsuccessful.")
+      return
 
     mycursor = mydb.cursor()
     db_name = os.getenv('DB_NAME')
@@ -24,8 +25,10 @@ def setup_db():
     else:
       logging.info(f"Database [{db_name}] already exists.")
   finally:
-    mycursor.close()
-    mydb.close()
+    if mycursor:
+      mycursor.close()
+    if mydb:
+      mydb.close()
 
   try:
     mydb = connect_to_db(db_name)
@@ -37,5 +40,7 @@ def setup_db():
     if os.getenv('TEST_RUN'):
       input_user(mydb, mycursor)
   finally:
-    mycursor.close()
-    mydb.close()
+    if mycursor:
+      mycursor.close()
+    if mydb:
+      mydb.close()
