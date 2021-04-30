@@ -9,6 +9,7 @@ def create_table(cursor, table_name, template_name: str, primary_key: str, forei
     if not check_if_table_exists(cursor, table_name):
       template = load_db_template(template_name)
       query = template.render(primary_key=primary_key, foreign_key=foreign_key)
+      logging.info(f"Executing query: {query}")
       cursor.execute(query)
 
       logging.info(f"Table {table_name} created")
