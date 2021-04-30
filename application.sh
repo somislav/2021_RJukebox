@@ -5,7 +5,7 @@ export CONFIGURATIONS=configurations
 export DB_TEMPLATES=db_templates
 
 # *** PROJECT VARIABLES ***
-export DB_NAME=RJukebox
+export DB_NAME=rjukebox
 
 export TEST_RUN=true
 
