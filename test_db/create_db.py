@@ -4,7 +4,7 @@ import os
 import defaults
 
 from test_db.create_table import create_table
-from test_db.users_input import input_user
+from test_db.users_input import input_user, input_songs
 from utilities.db_util import connect_to_db, execute_query, check_if_db_exists
 
 def setup_db():
@@ -39,6 +39,7 @@ def setup_db():
 
     if os.getenv('TEST_RUN'):
       input_user(mydb, mycursor)
+      input_songs(mydb, mycursor)
   finally:
     if mycursor:
       mycursor.close()

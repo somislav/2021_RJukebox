@@ -1,0 +1,2 @@
+INSERT INTO songs (song_name,artist,genre,yt_link)
+VALUES ('{{ song_name }}','{{ artist }}','{{ genre }}','{{ yt_link }}')
