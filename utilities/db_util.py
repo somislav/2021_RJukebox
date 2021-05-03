@@ -17,6 +17,28 @@ def connect_to_db(db: str = ""):
     logging.error(e)
     return None
 
+
+def connect_execute_query(query: str) -> list:
+  logging.info(f"Executing query: {query}")
+  try:
+    my_db = connect_to_db(os.getenv('DB_NAME'))
+    cursor = my_db.cursor()
+
+    execute_query(query, cursor)
+
+    return [result for result in cursor]
+  except Exception as e:
+    logging.error(f"Couldn't execute query [{query}]: {e}")
+    return []
+  finally:
+    logging.info("Closing DB after executing query.")
+
+    if cursor:
+      cursor.close()
+    if my_db:
+      my_db.close()
+
+
 def execute_query(query : str, cursor):
   try:
     result = cursor.execute(query)

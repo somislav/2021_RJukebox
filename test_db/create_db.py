@@ -37,7 +37,7 @@ def setup_db():
     create_table(mycursor, 'users', defaults.user_table, 'id')
     create_table(mycursor, 'songs', defaults.song_table, 'id')
 
-    if os.getenv('TEST_RUN'):
+    if os.getenv('TEST_RUN') == 'true':
       input_user(mydb, mycursor)
       input_songs(mydb, mycursor)
   finally:
