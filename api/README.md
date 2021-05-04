@@ -22,16 +22,6 @@ __Authentication:__ Bearer token for user account.
 
 <br>
 
-| Return code       | Explanation          |
-| :---------------- | :------------------- |
-| *200..299*        | Successful request   |
-| *420*             | Bad Parameter        |
-| *430*             | Unprocessable entity |
-| *403*             | Missing auth token   |
-| *405*             | Invalid auth token   |
-
-<br>
-
 ```python
 # PYTHON EXAMPLE
 import requests
@@ -44,6 +34,86 @@ response.raise_for_status()
 
 print(response.json())
 ```
+
+---
+
+```
+GET /api/votes
+```
+
+Returns list of all songs with the votes for each song. <br>
+
+__Authentication:__ Bearer token for user account.
+
+| Parameter         | Value                                                             |
+| :---------------- | :-----------------------------------------------------------------|
+| *votes*           | Filter by number of votes                                         |
+| *sort*            | Sort the results. Acceptable values: asc, desc. Default: asc      |
+| *song_name*       | Filter by the name of the song                                    |
+| *artist*          | Filter by artist name                                             |
+| *genre*           | Filter by genre. Acceptable values: Rock, HipHop, Metal, Pop, RnB |
+
+<br>
+
+```python
+# PYTHON EXAMPLE
+import requests
+
+headers = {'Authorization': 'Bearer <auth_token>'}
+params = { 'song_name': 'Runaway', 'artist': 'Kanye West' }
+
+response = requests.get('<base_url>/api/votes', params=params, headers=headers)
+response.raise_for_status()
+
+print(response.json())
+```
+
+---
+
+```
+GET /api/votes/top/<count>
+```
+
+Returns list of first <count> songs with the votes for each song. <br>
+
+__Authentication:__ Bearer token for user account.
+
+| Parameter         | Value                                                             |
+| :---------------- | :-----------------------------------------------------------------|
+| *votes*           | Filter by number of votes                                         |
+| *sort*            | Sort the results. Acceptable values: asc, desc. Default: asc      |
+| *song_name*       | Filter by the name of the song                                    |
+| *artist*          | Filter by artist name                                             |
+| *genre*           | Filter by genre. Acceptable values: Rock, HipHop, Metal, Pop, RnB |
+
+<br>
+
+```python
+# PYTHON EXAMPLE
+import requests
+
+headers = {'Authorization': 'Bearer <auth_token>'}
+params = { 'song_name': 'Runaway', 'artist': 'Kanye West' }
+
+response = requests.get('<base_url>/api/votes/top/5', params=params, headers=headers)
+response.raise_for_status()
+
+print(response.json())
+```
+
+---
+
+###### STATUS CODES
+
+| Status code       | Explanation          |
+| :---------------- | :------------------- |
+| *200..299*        | Successful request   |
+| *403*             | Missing auth token   |
+| *405*             | Invalid auth token   |
+| *420*             | Bad Parameter        |
+| *421*             | Bad parameter value  |
+| *430*             | Unprocessable entity |
+
 
 ## POST Endpoints
 - `/api/user_import` - Adds a user to db.users table
