@@ -25,7 +25,7 @@ class User:
 
     def input_user(self) -> bool:
         if self.validate_user():
-            logging.info("Adding {self.name} user into db.")
+            logging.info(f"Adding {self.name} user into db.")
             template = load_db_template(defaults.user_insert)
             insert_query = template.render(user=self.name, password=generate_hash(self.password))
             result=connect_execute_query(insert_query)
