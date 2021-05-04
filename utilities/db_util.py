@@ -1,6 +1,11 @@
 import os
 import logging
+import defaults
 import mysql.connector
+
+
+from db_templates.load_template import load_db_template
+
 
 def connect_to_db(db: str = ""):
   try:
@@ -61,3 +66,30 @@ def check_if_table_exists(cursor, table: str) -> bool:
 
 def check_if_db_exists(cursor, db: str) -> bool:
   return check_if_exists(cursor, db, "SHOW DATABASES")
+
+def add_table_column(cursor, table_name: str , column: str , data_type: str, default: str =""):
+  try:
+    if not check_if_column_exists(cursor, table_name, column):
+      template=load_db_template(defaults.add_column)
+      query=template.render(table_name=table_name, column=column, data_type=data_type, default=default)
+      logging.info(f"Executing query: [{query}]")
+      cursor.execute(query)
+      logging.info(f"Added column [{column}] to table [{table_name}]")
+  except Exception as e:
+    logging.exception(f"Exception [{e}] was made while adding column [{column}] in [{table_name}].")
+
+def check_if_column_exists(cursor, table_name: str , column: str) -> bool:
+  try:
+    template=load_db_template(defaults.check_for_column)
+    query=template.render(table_name=table_name,column=column)
+    logging.info(f"Checking if column [{column}] in table [{table_name}] exists.")
+    cursor.execute(query)
+    if [result[0] for result in cursor]:
+      logging.warning(f"Column [{column}] already exist.")
+      return True
+    return False
+  except Exception as e:
+    logging.exception(f"Exception while checking if [{column}] exists.")
+    return None
+
+

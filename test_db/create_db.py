@@ -5,7 +5,7 @@ import defaults
 
 from test_db.create_table import create_table
 from test_db.users_input import input_user, input_songs
-from utilities.db_util import connect_to_db, execute_query, check_if_db_exists
+from utilities.db_util import connect_to_db, execute_query, check_if_db_exists, add_table_column
 
 def setup_db():
   mydb = None
@@ -36,6 +36,7 @@ def setup_db():
 
     create_table(mycursor, 'users', defaults.user_table, 'id')
     create_table(mycursor, 'songs', defaults.song_table, 'id')
+    add_table_column(mycursor,'songs', 'votes', 'int', '0')
 
     if os.getenv('TEST_RUN') == 'true':
       input_user(mydb, mycursor)

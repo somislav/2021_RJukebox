@@ -3,6 +3,9 @@
 - *connect_to_db(db: str="") : connects to desired database if there is one and returns it.*
 - *execute_query(query : str,cursor): executes a desired query*
 - *check_if_exists(cursor, db : str, query) -> bool : check if a table or a database exists(query="SHOW (TABLES/DATABASES)")*
+- *add_table_column(cursor, table_name: str , column: str , data_type: str, default: str =""): adding a column if it doesnt exist*
+- *check_if_column_exists(cursor, table_name: str , column: str) -> bool: checks for column in table*
+- *connect_execute_query(query: str) -> list: same as `execute_query` but with connecting to db and closing connection* 
 
 ## hash_utilities.py
 - *generate_hash(password: str, algorithm: Algorithm = Algorithm.SHA256)->str : generates a hash string*
