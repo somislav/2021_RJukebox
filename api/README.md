@@ -40,6 +40,11 @@ response.raise_for_status()
 print(response.json())
 ```
 
+## POST Endpoints
+- `/api/user_import` - Adds a user to db.users table
+
 ## Folder content
 * __api_getter.py__
     - Consists of all API __GET__ endpoints.
+* __api_post.py__
+    - Consists of all API __POST__ endpoints.

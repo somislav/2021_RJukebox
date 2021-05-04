@@ -7,7 +7,7 @@ export DB_TEMPLATES=db_templates
 # *** PROJECT VARIABLES ***
 export DB_NAME=rjukebox
 
-export TEST_RUN=true
+export TEST_RUN=false
 
 # *** FLASK SETTINGS ***
 export FLASK_APP=application.py
