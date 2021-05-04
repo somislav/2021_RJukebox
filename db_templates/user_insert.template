@@ -1,2 +1,2 @@
-INSERT INTO users (user,password)
-VALUES ('{{ user }}','{{ password }}')
+INSERT INTO users (user,password,token)
+VALUES ('{{ user }}','{{ password }}','{{ token }}')

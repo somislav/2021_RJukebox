@@ -1,5 +1,8 @@
 import json
 import names
+import jwt
+import uuid
+import os
 import random
 import string
 import logging
@@ -14,7 +17,8 @@ def create_users() -> list:
         for i in range(10):
             data.append({
             'user':names.get_full_name(),
-            'password':generate_hash(f'12{i}45')
+            'password':generate_hash(f'12{i}45'),
+            'token': str(uuid.uuid4())
             })
 
         return data

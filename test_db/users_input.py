@@ -16,7 +16,7 @@ def input_user(my_db, cursor) -> bool:
     users = create_users()
 
     for user in users:
-        insert_query = template.render(user=user['user'], password=user['password'])
+        insert_query = template.render(user=user['user'], password=user['password'], token=user['token'])
         cursor.execute(insert_query)
 
     my_db.commit()

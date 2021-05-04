@@ -9,7 +9,9 @@ Each API method __needs to start with /api/__<br>
 GET /api/songs
 ```
 
-Returns list of all songs and respective info.
+Returns list of all songs and respective info. <br>
+
+__Authentication:__ Bearer token for user account.
 
 | Parameter         | Value                                                             |
 | :---------------- | :-----------------------------------------------------------------|
@@ -25,6 +27,8 @@ Returns list of all songs and respective info.
 | *200..299*        | Successful request   |
 | *420*             | Bad Parameter        |
 | *430*             | Unprocessable entity |
+| *403*             | Missing auth token   |
+| *405*             | Invalid auth token   |
 
 <br>
 
@@ -32,9 +36,10 @@ Returns list of all songs and respective info.
 # PYTHON EXAMPLE
 import requests
 
+headers = {'Authorization': 'Bearer <auth_token>'}
 params = { 'song_name': 'Runaway', 'artist': 'Kanye West' }
 
-response = requests.get('<base_url>/api/songs', params=params)
+response = requests.get('<base_url>/api/songs', params=params, headers=headers)
 response.raise_for_status()
 
 print(response.json())

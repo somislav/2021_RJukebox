@@ -17,3 +17,6 @@
 
 ## config_parser.py
 - *parse_json_config(config_path: str) -> dict : method will parse configuration file in json format and return a dictionary*
+
+## token_utilities.py
+- *token_required(func)* : Decorator that will validate API token authentication

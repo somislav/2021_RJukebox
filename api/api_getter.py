@@ -6,6 +6,7 @@ from flask import jsonify
 from flask import request
 
 from utilities.db_util import connect_execute_query
+from utilities.token_utilities import token_required
 
 
 api_getter = Blueprint('api_getter', __name__)
@@ -14,6 +15,7 @@ song_params = ['song_name', 'artist', 'genre', 'yt_link']
 
 
 @api_getter.route('/api/songs')
+@token_required
 def get_songs():
     logging.info("User requested list of songs.")
     try:
