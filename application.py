@@ -22,10 +22,12 @@ with app.app_context():
     import api.api_getter as api_get
     import api.api_post as api_post
     import api.api_delete as api_delete
+    import api.api_patch as api_patch
 
     app.register_blueprint(api_get.api_getter)
     app.register_blueprint(api_post.api_post)
     app.register_blueprint(api_delete.api_delete)
+    app.register_blueprint(api_patch.api_patch)
 
     @app.route('/')
     def index():

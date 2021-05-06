@@ -1,0 +1,3 @@
+UPDATE songs
+SET {{ field }} = '{{ update_value }}'
+WHERE song_name = '{{ song_name }}' AND artist = '{{ artist }}'

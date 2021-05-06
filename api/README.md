@@ -115,6 +115,84 @@ print(response.json())
 | *430*             | Unprocessable entity |
 
 
+## PATCH Endpoints
+
+- Each endpoint that accepts PATCH requires `song_name`, `artist` and `update` parameters
+- __Note:__ If you want to change more than one parameter with one request, use POST
+
+| Parameter         | Value                                                             |
+| :---------------- | :-----------------------------------------------------------------|
+| *song_name*       | Song name for the song you wish to alter                          |
+| *artist*          | Artist for the song you wish to alter                             |
+| *update*          | New value for field. Field itself is specified by endpoint        |
+
+---
+
+```
+PATCH /api/songs/name
+```
+
+Updates name of the song uniquely recognized by `song_name / artist` parameters with specified `update` parameter. <br>
+
+__Authentication:__ Bearer token for user account.
+
+---
+
+```
+PATCH /api/songs/artist
+```
+
+Updates artist of the song uniquely recognized by `song_name / artist` parameters with specified `update` parameter. <br>
+
+__Authentication:__ Bearer token for user account.
+
+---
+
+```
+PATCH /api/songs/genre
+```
+
+Updates genre of the song uniquely recognized by `song_name / artist` parameters with specified `update` parameter. <br>
+
+__Authentication:__ Bearer token for user account.
+
+---
+
+```
+PATCH /api/songs/link
+```
+
+Updates youtube link of the song uniquely recognized by `song_name / artist` parameters with specified `update` parameter. <br>
+
+__Authentication:__ Bearer token for user account.
+
+---
+
+###### STATUS CODES
+
+| Status code       | Explanation          |
+| :---------------- | :------------------- |
+| *200..299*        | Successful request   |
+| *403*             | Missing auth token   |
+| *405*             | Invalid auth token   |
+| *406*             | Bad Parameter        |
+| *430*             | Unprocessable entity |
+
+
+```python
+# PYTHON EXAMPLE
+import requests
+
+headers = {'Authorization': 'Bearer <auth_token>'}
+params = { 'song_name': 'Runaway', 'artist': 'Kanye West', 'update': 'HipHop' }
+
+response = requests.patch('<base_url>/api/songs/genre', params=params, headers=headers)
+response.raise_for_status()
+
+print(response.json())
+```
+
+
 ## POST Endpoints
 - `/api/user_import` - Adds a user to db.users table
 
@@ -123,3 +201,5 @@ print(response.json())
     - Consists of all API __GET__ endpoints.
 * __api_post.py__
     - Consists of all API __POST__ endpoints.
+* __api_patch.py__
+    - Consists of all API __PATCH__ endpoints.

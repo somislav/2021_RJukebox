@@ -13,3 +13,5 @@ user_insert = 'user_insert.template'
 
 add_column = 'add_column.template'
 check_for_column = 'check_for_column.template'
+
+update_songs_column = 'update_songs_column.template'
