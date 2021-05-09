@@ -4,6 +4,7 @@ CREATE TABLE songs (
     artist VARCHAR(255),
     genre VARCHAR(255),
     yt_link VARCHAR(255),
+    token VARCHAR(255),
     PRIMARY KEY ({{ primary_key }})
     {% if foreign_key -%}
     ,FOREIGN KEY ({{ foreign_key }})

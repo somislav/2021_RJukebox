@@ -1,4 +1,6 @@
 import logging
+import jwt
+import os
 
 from flask import Blueprint
 from flask import make_response
@@ -27,6 +29,8 @@ def user_import():
         return user.name
     except Exception as e:
         logging.exception(f"Exception [{e}]: while adding user")
+        return make_response("Unprocessable entity", 430)
+
 
 @api_post.route('/api/add_song', methods=['POST'])
 @token_required
@@ -35,14 +39,21 @@ def add_song():
         for param in required_params:
             if param not in request.args:
                 return make_response(f"{param} field is required", 401)
+
         artist=request.args.get('artist')
         genre=request.args.get('genre')
         song_name=request.args.get('song_name')
         yt_link=request.args.get('yt_link')
-        song = Song(artist, genre, song_name, yt_link)
-        song.input_song()
-        return song.song_name
+        auth_token = request.headers.get('Authorization').split(" ")[1]
+        token = jwt.decode(auth_token, os.getenv('SECRET_KEY'), algorithms=["HS256"])['token']
+
+        song = Song(artist, genre, song_name, yt_link, token)
+        is_added = song.input_song()
+
+        if not is_added:
+            return make_response(f"Song [{song.song_name}] already exists. use PATCH endpoints to alter", 200)
+
+        return make_response(f"Song [{song.song_name}] successfully added.", 200)
     except Exception as e:
         logging.exception(f"Exception [{e}]: while adding song [{song.song_name}]")
-
-    
+        return make_response("Unprocessable entity", 430)

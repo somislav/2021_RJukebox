@@ -41,8 +41,9 @@ def create_songs() -> list:
             artist = names.get_first_name()
             song_name = names.get_last_name()
             genre = random.choice(genres)
+            token = str(uuid.uuid4())
 
-            data.append({ 'song_name': song_name, 'artist': artist, 'genre': genre, 'yt_link': yt_link })
+            data.append({ 'song_name': song_name, 'artist': artist, 'genre': genre, 'yt_link': yt_link, 'token': token })
 
         return data
     except Exception as e:

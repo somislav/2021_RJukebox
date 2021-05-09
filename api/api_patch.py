@@ -7,6 +7,7 @@ from flask import request
 
 from utilities.db_util import connect_execute_query
 from utilities.token_utilities import token_required
+from utilities.token_utilities import owner_token_required
 from db_templates.load_template import load_db_template
 from classes.Song import Song
 import defaults
@@ -17,30 +18,41 @@ api_patch = Blueprint('api_patch', __name__)
 
 @api_patch.route('/api/songs/name', methods=['PATCH'])
 def change_song_name():
-    return _handle_patch_request('song_name')
+    return _handle_owner_token_patch_request('song_name')
 
 
 @api_patch.route('/api/songs/artist', methods=['PATCH'])
 def change_artist():
-    return _handle_patch_request('artist')
+    return _handle_owner_token_patch_request('artist')
 
 
 @api_patch.route('/api/songs/genre', methods=['PATCH'])
 def change_genre():
-    return _handle_patch_request('genre')
+    return _handle_owner_token_patch_request('genre')
 
 
 @api_patch.route('/api/songs/link', methods=['PATCH'])
 def change_yt_link():
-    return _handle_patch_request('yt_link')
+    return _handle_owner_token_patch_request('yt_link')
 
 
 @api_patch.route('/api/songs/votes', methods=['PATCH'])
 def change_votes():
-    return _handle_patch_request('votes')
+    return _handle_token_patch_request('votes')
 
 
 @token_required
+def _handle_token_patch_request(field: str):
+    logging.info("PATCH: asking for any valid token auth.")
+    return _handle_patch_request(field)
+
+
+@owner_token_required
+def _handle_owner_token_patch_request(field: str):
+    logging.info("PATCH: asking for token auth of the song owner.")
+    return _handle_patch_request(field)
+
+
 def _handle_patch_request(field: str):
     try:
         logging.info(f"User requested [{field}] change")

@@ -34,7 +34,11 @@ def input_songs(my_db, cursor) -> bool:
     
     songs = create_songs()
     for song in songs:
-        insert_query = template.render(song_name=song['song_name'], artist=song['artist'], genre=song['genre'], yt_link=song['yt_link'])
+        insert_query = template.render(song_name=song['song_name'],
+                                       artist=song['artist'],
+                                       genre=song['genre'],
+                                       yt_link=song['yt_link'],
+                                       token=song['token'])
         cursor.execute(insert_query)
     
     my_db.commit()

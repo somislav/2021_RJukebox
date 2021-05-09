@@ -10,11 +10,12 @@ from utilities.db_util import connect_execute_query
 
 
 class Song:
-    def __init__(self, artist, genre, song_name, yt_link):
+    def __init__(self, artist, genre, song_name, yt_link, token):
         self.artist = artist
         self.genre = genre
         self.song_name = song_name
         self.yt_link = yt_link
+        self.token = token
     
     def check_if_song_exists(self) -> bool:
         query=f"SELECT * FROM songs WHERE UPPER(artist)=\'{self.artist.upper()}\' AND UPPER(song_name)=\'{self.song_name.upper()}\'"
@@ -31,7 +32,11 @@ class Song:
             logging.info(f"Adding [{self.artist.upper()}:{self.song_name}] song into db.")
 
             template = load_db_template(defaults.song_insert)
-            insert_query = template.render(song_name=self.song_name, artist=self.artist, genre=self.genre, yt_link=self.yt_link)
+            insert_query = template.render(song_name=self.song_name,
+                                           artist=self.artist,
+                                           genre=self.genre,
+                                           yt_link=self.yt_link,
+                                           token=self.token)
 
             connect_execute_query(insert_query)
             
