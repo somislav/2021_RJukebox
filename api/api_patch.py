@@ -8,6 +8,7 @@ from flask import request
 from utilities.db_util import connect_execute_query
 from utilities.token_utilities import token_required
 from db_templates.load_template import load_db_template
+from classes.Song import Song
 import defaults
 
 
@@ -33,6 +34,10 @@ def change_genre():
 def change_yt_link():
     return _handle_patch_request('yt_link')
 
+@api_patch.route('/api/songs/votes',methods=['PATCH'])
+@token_required
+def change_votes():
+    return _handle_patch_request('votes')
 
 @token_required
 def _handle_patch_request(field: str):
@@ -42,7 +47,10 @@ def _handle_patch_request(field: str):
         if not _required_params():
             return make_response("Invalid parameter(s)", 406)
 
-        update_value = request.args.get('update')
+        if field=='votes':
+            update_value='votes + 1'
+        else:
+            update_value = request.args.get('update')
         song_name = request.args.get('song_name')
         artist = request.args.get('artist')
 
