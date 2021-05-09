@@ -34,10 +34,11 @@ def change_genre():
 def change_yt_link():
     return _handle_patch_request('yt_link')
 
-@api_patch.route('/api/songs/votes',methods=['PATCH'])
-@token_required
+
+@api_patch.route('/api/songs/votes', methods=['PATCH'])
 def change_votes():
     return _handle_patch_request('votes')
+
 
 @token_required
 def _handle_patch_request(field: str):
