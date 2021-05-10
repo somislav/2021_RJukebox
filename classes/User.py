@@ -25,6 +25,14 @@ class User:
             return True
 
     def input_user(self) -> bool:
+        if len(self.name) <= 3:
+            logging.info("Username must have more than 3 characters.")
+            return False
+        
+        if len(self.password) <= 4:
+            logging.info("Password must have more than 4 characters.")
+            return False
+
         if self.validate_user():
             logging.info(f"Adding {self.name} user into db.")
             token = str(uuid.uuid4())

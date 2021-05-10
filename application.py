@@ -5,7 +5,7 @@ import defaults
 
 from dotenv import load_dotenv
 
-import logging
+import logging 
 from utilities.logger_utilities import setup_logger
 
 from test_db.create_db import setup_db
@@ -23,12 +23,12 @@ with app.app_context():
     import api.api_post as api_post
     import api.api_delete as api_delete
     import api.api_patch as api_patch
+    import frontend.frontend as front
 
     app.register_blueprint(api_get.api_getter)
     app.register_blueprint(api_post.api_post)
     app.register_blueprint(api_delete.api_delete)
     app.register_blueprint(api_patch.api_patch)
-
-    @app.route('/')
-    def index():
-        return "Main page"
+    app.register_blueprint(front.frontend)
+    
+  
