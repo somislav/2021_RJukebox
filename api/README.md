@@ -194,7 +194,79 @@ print(response.json())
 
 
 ## POST Endpoints
-- `/api/user_import` - Adds a user to db.users table
+
+```
+POST /api/user_import
+```
+
+Imports a user into db. <br>
+
+| Parameter         | Value                                                             |
+| :---------------- | :-----------------------------------------------------------------|
+| *name*            | User name for your account.                                       |
+| *password*        | Password for your account.                                        |
+
+<br>
+
+```python
+# PYTHON EXAMPLE
+import requests
+
+params = { 'Name': 'Nikola', 'password': 'sifra' }
+
+response = requests.post('<base_url>/api/user_import', params=params)
+response.raise_for_status()
+
+print(response.json())
+```
+
+---
+
+```
+POST /api/add_song
+```
+__Authentication:__ Bearer token for user account.
+
+Imports song into db. <br>
+
+| Parameter         | Value                                                             |
+| :---------------- | :-----------------------------------------------------------------|
+| *song_name*       | Song name for the song being added.                               |
+| *atist*           | Artist which has played the song.                                 |
+| *genre*           | Genre of the song being added.                                    |
+| *yt_link*         | YouTube link for the song.                                        |
+
+<br>
+
+```python
+# PYTHON EXAMPLE
+import requests
+
+headers = {'Authorization': 'Bearer <auth_token>'}
+params = { 'song_name': 'Runaway', 'artist': 'Kanye West', 'genre': 'HipHop', 'yt_link': 'https://www.youtube.com/...' }
+
+response = requests.post('<base_url>/api/add_song', params=params, headers=headers)
+response.raise_for_status()
+
+print(response.json())
+```
+
+---
+
+
+###### STATUS CODES
+
+| Status code       | Explanation           |
+| :---------------- | :-------------------  |
+| *200..299*        | Successful request    |
+| *300*             | Already exist warning |
+| *401*             | Missing param value   |
+| *403*             | Missing auth token    |
+| *405*             | Invalid auth token    |
+| *420*             | Bad Parameter         |
+| *421*             | Bad parameter value   |
+| *430*             | Unprocessable entity  |
+
 
 ## Folder content
 * __api_getter.py__

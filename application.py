@@ -17,6 +17,8 @@ setup_db()
 
 app = Flask(__name__)
 
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+
 with app.app_context():
 
     import api.api_getter as api_get
