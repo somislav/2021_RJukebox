@@ -5,62 +5,43 @@ from flask import make_response
 from flask import jsonify
 
 from utilities.db_util import connect_execute_query
+from utilities.token_utilities import owner_token_required
 
+from classes.Song import Song
 
 api_delete = Blueprint('api_delete', __name__)
 
-"""
-@api_delete.route('api/songs')
-def delete_song(song)
-    return _handle_request() #sta treba vracati?
 
-def _handle_request(wanted_params: str, endpoint: str):
-    logging.info(f"User requested delete of {endpoint}.")
+@api_delete.route('/api/songs',methods=['DELETE'])
+def delete_song():
+    return _handle_owner_token_request('song_name')
+
+
+@owner_token_required
+def _handle_owner_token_request(song_name: str):
+    logging.info("DELETE: asking for token auth of the song owner.")
+    return _handle_delete_request(song_name)
+
+def handle_delete_request(song_name: str):
     try:
-        if invalid_parameters(wanted_params):
-            logging.info("Bad parameter added to request.")
-            return make_response(f"Bad parameter", 420)
-
-        if invalid_param_value():
-            logging.info("Bad parameter values added to request.")
-            return make_response("Bad parameter value", 421)
-
-        where_query = ''
-        for param in wanted_params:
-            if param == 'sort':
-                continue
-
-            if param in request.args:
-                logging.info(f"User requested {param} to be {request.args.delete(param)}.")
-                where_query += f"{' AND' if where_query else ''} {param}='{request.args.delete(param)}'"
-
-        where_query = f" WHERE{where_query}" if where_query else ''
-
-        values = [param for param in wanted_params if param != 'sort']
-        values_str = ','.join(values)
-
-        query = f"DELETE {values_str} FROM songs{where_query}"
+        logging.info(f"User requested delete of {song_name}.")
+       
+        if not _song_in_db():
+            return make_response("Bad song_name value", 405)
+    
+        query = f"DELETE FROM songs where song_name={song_name}"
         songs = connect_execute_query(query)
-
-        query = f"DELETE {values_str} FROM users{where_query}"
-        songs = connect_execute_query(query)
-
         return jsonify(response)
+
     except Exception as e:
-        logging.error(f"Error happened while using /api/{endpoint} endpoint: {e}")
+        logging.error(f"Error happened while using /api/songs endpoint: {e}")
         return make_response('Could not get the results. Please try later.', 430)
 
 
-def invalid_parameters(params):
-    return any(arg not in params for arg in request.args)
-
-
-def invalid_param_value():
-    if 'genre' in request.args:
-        if request.args.get('genre') not in genre_valid:
-            return True
-    if 'sort' in request.args:
-        if request.args.get('sort') not in sort_valid:
-            return True
-    return False
-    """
+def _song_in_db(song_name:str) -> bool:
+    query=f"SELECT song_name from song where song_name={song_name}"
+    found = connect_execute_query(query)
+    if found is None:
+        logging.info("Song is not in the database.")
+        return False
+    return True
