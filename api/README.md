@@ -268,6 +268,44 @@ print(response.json())
 | *430*             | Unprocessable entity  |
 
 
+## DELETE ENDPOINT
+
+```
+DELETE /api/songs
+```
+Deletes a song from db. <br>
+
+| Parameter         | Value                                                             |
+| :---------------- | :-----------------------------------------------------------------|
+| *song_name*       | Song name for the song being deleted.                             |
+| *atist*           | Artist which has played the song.                                 |
+
+<br>
+
+```python
+# PYTHON EXAMPLE
+import requests
+
+headers = {'Authorization': 'Bearer <auth_token>'}
+params = { 'song_name': 'Runaway', 'artist': 'Kanye West'}
+
+response = requests.delete('<base_url>/api/songs', params=params, headers=headers)
+response.raise_for_status()
+
+print(response.json())
+
+```
+
+
+###### STATUS CODES
+
+| Status code       | Explanation           |
+| :---------------- | :-------------------  |
+| *405*             | Bad song name value   |
+| *430*             | Unprocessable entity  |
+
+
+
 ## Folder content
 * __api_getter.py__
     - Consists of all API __GET__ endpoints.
