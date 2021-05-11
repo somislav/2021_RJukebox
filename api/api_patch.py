@@ -57,7 +57,7 @@ def _handle_patch_request(field: str):
     try:
         logging.info(f"User requested [{field}] change")
 
-        if not _required_params():
+        if not _required_params(field):
             return make_response("Invalid parameter(s)", 406)
 
         if field=='votes':
@@ -80,6 +80,9 @@ def _handle_patch_request(field: str):
         return make_response("Unprocessable entity", 430)
 
 
-def _required_params() -> bool:
-    valid_params = [ 'song_name', 'artist', 'update' ]
+def _required_params(field: str) -> bool:
+    if field=='votes':
+        valid_params = [ 'song_name', 'artist']
+    else:
+        valid_params = [ 'song_name', 'artist', 'update']
     return set(valid_params) == set([arg for arg in request.args])
