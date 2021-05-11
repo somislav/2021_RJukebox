@@ -25,6 +25,8 @@ def connect_to_db(db: str = ""):
 
 def connect_execute_query(query: str) -> list:
   logging.info(f"Executing query: {query}")
+  my_db = None
+  cursor = None
   try:
     my_db = connect_to_db(os.getenv('DB_NAME'))
     cursor = my_db.cursor()

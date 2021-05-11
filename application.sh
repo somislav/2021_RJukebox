@@ -20,4 +20,4 @@ export FLASK_ENV=development
 # *** PYTHONPATH ***
 export PYTHONPATH=${PWD}:${PYTHONPATH}
 echo $PYTHONPATH
-python -m flask run --no-reload
+flask run --no-reload
