@@ -18,10 +18,36 @@ frontend = Blueprint('frontend',
                      template_folder='templates')
 
 
-@frontend.route('/')  
-def index():
-    return render_template("home.html")
+@frontend.route('/',methods=['GET','POST'])
+def charts():
+    if request.method =='GET':
+        select_query="SELECT * from songs order by votes desc limit 10"
+        songs=connect_execute_query(select_query)
+        if not songs:
+            logging.info("Couldn't get results")
+            return render_template('charts.html')
 
+        return render_template('charts.html',songs=songs)
+        
+    genre=request.form['genre']
+    if 'all' in genre:
+        select_query="SELECT * from songs order by votes desc limit 10"
+        songs=connect_execute_query(select_query)
+        if not songs:
+            logging.info("Coudln't get results")
+            return render_template('charts.html')
+
+        return render_template('charts.html',songs=songs)
+
+    select_query=f"SELECT * from songs where genre='{genre}' order by votes desc limit 10"
+    songs=connect_execute_query(select_query)
+
+    if not songs:
+        logging.info("You have selected invalid genre, please try again")
+        return render_template('charts.html')
+
+    return render_template('charts.html',songs=songs) 
+    
 
 @frontend.route('/sign-up', methods=['GET','POST'])
 def signup():
@@ -40,7 +66,7 @@ def signup():
     success = user.input_user()
 
     if not success:
-        flash("User must have atleast 3 chars, password 4.", category='error')
+        flash("User must have atleast 3 chars, password 4 or the user is already in database.", category='error')
         return render_template("sign_up.html")
         
     token = user.get_encoded_token()
@@ -83,11 +109,6 @@ def songs():
 
     return render_template('added_song.html',name=song.song_name)
 
-
-@frontend.route('/charts', methods=['GET','POST'])
-def charts():
-    return render_template('charts.html') 
-    
        
 @frontend.route('/user')
 def main():

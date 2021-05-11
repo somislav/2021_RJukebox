@@ -1,46 +1,37 @@
-{% extends "base2.html" %} {% block title %}Charts{% endblock %} {% block content
+{% extends "base.html" %} {% block title %}Charts{% endblock %} {% block content
     %}
     <h1 align="center">Charts</h1>
-    <p>kako ovo dizajnirati? i kakva je funkcionalnost?
-        Moja ideja je da se selektira Zanr i da se u zavisnosti od zanra prikaze top 10
-    </p>
-    <h3>Please select genre</h3>
-    <input type="radio" id="pop" name="genre" value="pop">
-    <label for="pop">Pop</label><br>
-    <input type="radio" id="rnb" name="genre" value="rnb">
-    <label for="rnb">RnB</label><br>
-    <input type="radio" id="hiphop" name="genre" value="hiphop">
-    <label for="hiphop">HipHop</label><br>
-    <input type="radio" id="metal" name="genre" value="metal">
-    <label for="metal">Metal</label>
-    <table>
+
+    <h3 align="center">Please select genre</h3>
+<form name="form" action="" method="post" onsubmit="" align="center">
+    <input type="radio" id="Pop" name="genre" value="Pop"> </input>
+    <label for="Pop">Pop</label>
+    <input type="radio" id="RnB" name="genre" value="RnB"> </input>
+    <label for="RnB">RnB</label><br>
+    <input type="radio" id="HipHop" name="genre" value="HipHop"> </input>
+    <label for="HipHop">HipHop</label>
+    <input type="radio" id="Metal" name="genre" value="Metal"> </input>
+    <label for="Metal">Metal</label><br>
+    <input type="radio" id="Rock" name="genre" value="Rock"> </input>
+    <label for="Rock">Rock</label>
+    <input type="radio" checked="checked" id="all" name="genre" value="all"> </input>
+    <label for="all">All</label><br>
+    <button type="submit" class= "btn btn-primary">Submit</button>
+    
+</form>
+    <table align="center" border="2px solid black" width="100%">
         <th>Name</th>
         <th>Artist</th>
         <th>Youtube link</th>
         <th>Rating</th>
+        {% for song in songs %}
         <tr>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-        </tr>
-        <tr>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-        </tr>
-        <tr>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-        </tr>
-        <tr>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-        </tr>
+            <td>{{song[1]}}</td>
+            <td>{{song[2]}}</td>
+            <td>{{song[4]}}</td>
+            <td>{{song[6]}}</td>
+        </tr>   
+        {% endfor %}
+        
     </table>
 {% endblock %}
