@@ -47,3 +47,9 @@ Application will create log file in the format `applicationLogs_Year_Month_Day_H
 * Same logs are also sent on standard output
 
 Logging configuration is located in [logger_config.ini](https://github.com/MATF-Computer-Networks-Projects/2021_RJukebox/blob/main/configurations/logger_config.ini) file.
+
+## Contributors
+
+* [Nikola Damjanovic](https://github.com/damiapp)
+* [Milos Nikolic](https://github.com/somislav)
+* [Luka Kumburovic](https://github.com/SpotRZ)
