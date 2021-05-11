@@ -10,7 +10,7 @@ from db_templates.load_template import load_db_template
 def connect_to_db(db: str = ""):
   try:
     db_config = { 
-      'host': 'localhost', 
+      'host': os.getenv('HOST'),
       'user': os.getenv('USER'),
       'password': os.getenv('PASSWORD')
     } 
