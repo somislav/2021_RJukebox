@@ -51,7 +51,7 @@ def add_song():
         is_added = song.input_song()
 
         if not is_added:
-            return make_response(f"Song [{song.song_name}] already exists. use PATCH endpoints to alter", 200)
+            return make_response(f"Song [{song.song_name}] already exists. use PATCH endpoints to alter", 300)
 
         return make_response(f"Song [{song.song_name}] successfully added.", 200)
     except Exception as e:
